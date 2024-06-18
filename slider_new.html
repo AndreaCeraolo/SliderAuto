@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider_new</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .imgBox {
+            height: 960px;
+            width: 640px;
+            overflow: hidden;
+            display: flex;
+            margin: auto;
+        }
+
+        .imgSlider {
+            height: 960px;
+            width: 3200px;
+            display: flex;
+        }
+
+        button {
+            margin-left: 10px;
+        }
+
+        button img {
+            height: 150px;
+            width: 100px;
+        }
+
+        .buttonBox {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body onload="mostraFoto(4, false)">
+    <h1>Slider New</h1>
+    <div class="imgBox">
+        <div class="imgSlider">
+            <img src="Foto1.jpg" alt="">
+            <img src="Foto2.jpg" alt="">
+            <img src="Foto3.jpg" alt="">
+            <img src="Foto4.jpg" alt="">
+            <img src="Foto5.jpg" alt="">
+        </div>
+    </div>
+    <div class="buttonBox">
+        <button onclick="mostraFoto(0, true)"><img src="Foto1.jpg" alt=""></button>
+        <button onclick="mostraFoto(1, true)"><img src="Foto2.jpg" alt=""></button>
+        <button onclick="mostraFoto(2, true)"><img src="Foto3.jpg" alt=""></button>
+        <button onclick="mostraFoto(3, true)"><img src="Foto4.jpg" alt=""></button>
+        <button onclick="mostraFoto(4, true)"><img src="Foto5.jpg" alt=""></button>
+    </div>
+</body>
+<script>
+    let interval;
+    let riferimentoMl = 0;
+    let ml = 0;
+    let cliccato = false;
+
+    function mostraFoto(foto, click) {
+        cliccato = click;
+        riferimentoMl = -foto * 640;
+        if (ml > riferimentoMl) {
+            clearInterval(interval);
+            interval = setInterval(sinistra, 1);
+        }
+        if (ml < riferimentoMl) {
+            clearInterval(interval);
+            interval = setInterval(destra, 1);
+        }
+    }
+
+    function sinistra() {
+        if (ml > riferimentoMl) {
+            ml -= 2;
+            document.querySelector('.imgSlider').style.marginLeft = ml + 'px';
+        } else {
+            clearInterval(interval);
+        }
+        if (!cliccato && ml == -4 * 640) {
+            mostraFoto(0, false)
+        }
+    }
+    function destra() {
+        if (ml < riferimentoMl) {
+            ml += 2;
+            document.querySelector('.imgSlider').style.marginLeft = ml + 'px';
+        } else {
+            clearInterval(interval);
+        }
+        if (!cliccato && ml == 0) {
+            mostraFoto(4, false)
+        }
+    }
+</script>
+
+</html>
